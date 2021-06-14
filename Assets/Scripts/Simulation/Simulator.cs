@@ -1,25 +1,46 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Simulator : MonoBehaviour
 {
-    [SerializeField] private List<Spawner> spawnerList = default;
+    [SerializeField] private List<BoxSpawner> boxSpawnerList = default;
+    [SerializeField] private UnityEvent onLevelCompleteEvent = default;
+
+    private int m_CompletedReceivers = default;
 
     public void StartSimulation()
     {
-        foreach(Spawner spawner in spawnerList)
+        if (m_CompletedReceivers < boxSpawnerList.Count)
         {
-            spawner.BeginSpawning();
+            foreach (BoxSpawner spawner in boxSpawnerList)
+            {
+                spawner.ResetState();
+                spawner.BeginSpawning();
+            }
         }
     }
 
     public void StopSimulation()
     {
-        foreach(Spawner spawner in spawnerList)
+        if (m_CompletedReceivers < boxSpawnerList.Count)
         {
-            spawner.StopSpawning();
-            spawner.DeleteBoxes();
-            spawner.ResetState();
+            foreach (BoxSpawner spawner in boxSpawnerList)
+            {
+                spawner.StopSpawning();
+                spawner.DeleteBoxes();
+                spawner.ResetState();
+            }
+        }
+    }
+
+    public void OnReceiverAllBoxesReceived()
+    {
+        ++m_CompletedReceivers;
+
+        if (m_CompletedReceivers >= boxSpawnerList.Count)
+        {
+            onLevelCompleteEvent.Invoke();
         }
     }
 }

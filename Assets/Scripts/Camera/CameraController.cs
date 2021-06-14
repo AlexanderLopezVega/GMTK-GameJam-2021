@@ -31,6 +31,11 @@ public class CameraController : MonoBehaviour
     private Vector3 m_VirtualTarget = default;
     private Vector3 m_CameraVelocity = default;
 
+    private void Start()
+    {
+        m_VirtualTarget = cameraTransform.position;
+    }
+
     private void Update()
     {
         Vector2 moveInput = Vector2.zero;
@@ -65,9 +70,6 @@ public class CameraController : MonoBehaviour
                 Vector3 right = cameraTransform.right;
                 Vector3 forward = Vector3.ProjectOnPlane(cameraTransform.forward, Vector3.up).normalized;
 
-                Debug.DrawLine(cameraTransform.position, cameraTransform.position + right, Color.blue);
-                Debug.DrawLine(cameraTransform.position, cameraTransform.position + forward, Color.red);
-
                 Vector3 targetDirection = (right * moveInput.x + forward * moveInput.y).normalized;
                 Vector3 velocity = targetDirection * virtualTargetSpeed;
 
@@ -76,7 +78,7 @@ public class CameraController : MonoBehaviour
 
             // Smooth damp move camera
             {
-                Vector3 targetPosition = m_VirtualTarget + (Quaternion.Euler(pitch, 0f, 0f) * Quaternion.Euler(0f, yaw, 0f) * Vector3.back * offset);
+                Vector3 targetPosition = m_VirtualTarget + (Quaternion.Euler(pitch, yaw, 0f) * Vector3.back).normalized * offset;
 
                 cameraTransform.position = Vector3.SmoothDamp(cameraTransform.position, targetPosition, ref m_CameraVelocity, smoothTime);
                 cameraTransform.rotation = Quaternion.Euler(pitch, yaw, 0f);
@@ -87,7 +89,7 @@ public class CameraController : MonoBehaviour
     private void OnDrawGizmosSelected()
     {
         if (drawGizmos)
-        {
+        {/*
             Handles.BeginGUI();
 
             Rect rect = new Rect(0, 0, 0, 0);
@@ -112,7 +114,7 @@ public class CameraController : MonoBehaviour
 
             Handles.EndGUI();
 
-            Gizmos.DrawSphere(m_VirtualTarget, GizmosVirtualTargetRadius);
+            Gizmos.DrawSphere(m_VirtualTarget, GizmosVirtualTargetRadius);*/
         }
     }
 }

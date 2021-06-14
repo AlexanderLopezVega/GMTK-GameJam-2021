@@ -1,0 +1,16 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b4745b3c4558ab4599ab7fdc5887465, type: 3}
+  m_Name: Up Belt SO
+  m_EditorClassIdentifier: 
+  beltPrefab: {fileID: 8789445389358509034, guid: 49d459aeacf6ae4408ed0b029d6af639, type: 3}
+  beltConnection: {fileID: 7907311436746648687, guid: 49d459aeacf6ae4408ed0b029d6af639, type: 3}
